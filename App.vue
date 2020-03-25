@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <keep-alive exclude="Player">
+        <router-view/>
+    </keep-alive>
     
-    <router-view/>
     <BackTop />
   </div>
 </template>

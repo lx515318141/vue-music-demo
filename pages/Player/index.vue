@@ -17,7 +17,7 @@
         <div class="song-info">
             <div class="song-info-img">
                 <img :src="playInfo.songinfo.pic_radio">
-                <Lyric :songid="this.$route.params.id" />
+                <Lyric :songid="this.$route.params.id" :currentTime="currentTime" :duration="duration"/>
             </div>
             <div class="iconbox">
                 <i class="iconfont icon-shoucang2 left"></i>
@@ -37,7 +37,9 @@ export default {
     name:"Player",
     data(){
         return{
-            playInfo:{}
+            playInfo:{},
+            currentTime:"",
+            duration:""
         }
     },
     components:{
@@ -69,18 +71,18 @@ export default {
     },
     methods:{
         playerAddListener(){
-            this.$refs.player.addEventListener("timeupdate", this.currentTimeHandler)
-            this.$refs.player.addEventListener("canplay", this.durationHandler)
+            this.$refs.player.addEventListener("timeupdate", this.currentTimeHandler)   //歌曲当前播放时间
+            this.$refs.player.addEventListener("canplay", this.durationHandler)     //歌曲总时长
         },
         playerRemoveListener(){
             this.$refs.player.removeEventListener("timeuodate",this.currentTimeHandler)
             this.$refs.player.removeEventListener("canplay",this.durationHandler)
         },
         currentTimeHandler(){
-            console.log(this.$refs.player.currentTime);
+            this.currentTime = this.$refs.player.currentTime
         },
         durationHandler(){
-            console.log(this.$refs.player.duration);
+            this.duration = this.$refs.player.duration
         }
     },
     beforeDestroy(){
