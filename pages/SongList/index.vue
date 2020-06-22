@@ -10,6 +10,9 @@ export default {
     name:"SongList",
     components:{
     Nav
+  },
+  mounted() {
+      console.log(132);
   }
 }
 </script>

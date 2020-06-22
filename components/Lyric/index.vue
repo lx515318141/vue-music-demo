@@ -2,13 +2,13 @@
   <div class="lrcContainer">
     <!-- {{ duration }}-{{ currentTime }} -->
     <!-- <p v-if="currentTime >= allKeys[index] && currentTime < allKeys[index+1] " v-for="(value,key,index) in lyricContent" :key="index">{{ value }}</p> -->
-    <div class="lrc" ref="Lyric">
+    <div class="lrc" ref="Lyric" v-if="lyricContent.noLrc">
       <p
         class="lrc-p"
         :class="{'active':currentTime >= allKeys[index] && currentTime < allKeys[index+1]}"
         v-for="(value,key,index) in lyricContent"
         :key="index"
-      >{{ value }}{{ scrollLrc(index) }}</p>
+      >{{ lyricContent }}{{ scrollLrc(index) }}</p>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
           this.lyricContent["noLrc"] = "暂无歌词";
           console.log("1");
         }
-        console.log(res.data);
+        console.log(this.lyricContent);
       });
   },
   methods: {

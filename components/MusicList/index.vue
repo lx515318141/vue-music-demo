@@ -63,7 +63,7 @@ export default {
 }
 
 .block-padding {
-    padding: 10px 17px;
+    padding: 10px 14px;
     background-color: #fff;
 }
 

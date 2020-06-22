@@ -41,6 +41,12 @@
         props:{
             
         },
+        created() {
+            console.log(123);    
+        },
+        destroyed() {
+            console.log('destroyed');
+        },
         mounted(){
             let _this = this;
             this.$api.getTodayRecommend({

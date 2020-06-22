@@ -134,7 +134,7 @@ export default {
 
 .song-info-img {
     text-align: center;
-    flex: 1;
+    flex: 1 1;
     display: flex;
     flex-direction: column;
 }
