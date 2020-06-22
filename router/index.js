@@ -7,6 +7,7 @@ import Search from '../pages/Search'
 import SongList from '../pages/SongList'
 import Top from '../pages/Top'
 import Player from '../pages/Player'
+import More from '../pages/More'
 
 Vue.use(Router)
 
@@ -27,10 +28,12 @@ export default new Router({
     },
     {
       path: '/search',
+      name:'Search',
       component: Search
     },
     {
       path: '/top',
+      name:'Top',
       component: Top
     },
     {
@@ -41,6 +44,11 @@ export default new Router({
       path: '/player/:id',
       name:'Player',
       component: Player
+    },
+    {
+      path: '/more/:type',
+      name:'More',
+      component: More
     },
   ]
 })

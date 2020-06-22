@@ -14,7 +14,9 @@
                             </div>
                         </router-link>
                     </ul>
-                    <div class="more-songs url">查看该榜单&gt;</div>
+                    <div class="more-songs url">
+                        <router-link :to="{name:'More', params:{type: Ttype[currentIndex - 1]}}">查看该榜单&gt;</router-link>
+                    </div>
                 </div>
             </tab>
         </tabs>
@@ -28,12 +30,15 @@ export default {
     data(){
         return{
             currentIndex: "1",
-            allMusic: []
+            allMusic: [],
+            Ttype: ['1','2','22']
         }
     },
     methods:{
         getCurrentIndex(index){
             this.currentIndex = index
+            console.log(this.currentIndex)
+            console.log(this.Ttype[this.currentIndex -1])
         }
     },
     mounted(){
@@ -66,7 +71,6 @@ export default {
         this.$axios.all([newMusic(),hotMusic(),oldMusic()]).then(
             this.$axios.spread(function(newMusic,hotMusic,oldMusic){
                 _this.allMusic.push(newMusic.data,hotMusic.data,oldMusic.data)
-                
             })
         )
     }

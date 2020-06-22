@@ -62,7 +62,7 @@ export default {
             })
 
             // 使用setTimeout可以实现，因为setTimeout会延时执行，延时后DOM已经被渲染出来了，可以获取到。
-            // 但是不要使用该方法，工作中不允许
+            // 但是不要使用该方法，工作中不允许，非延时的需求不能使用setTimeout
             // setTimeout(()=>{
             //     console.log(this.$refs.player);
             // })
@@ -71,8 +71,10 @@ export default {
     },
     methods:{
         playerAddListener(){
-            this.$refs.player.addEventListener("timeupdate", this.currentTimeHandler)   //歌曲当前播放时间
-            this.$refs.player.addEventListener("canplay", this.durationHandler)     //歌曲总时长
+            //歌曲当前播放时间
+            this.$refs.player.addEventListener("timeupdate", this.currentTimeHandler)
+            //歌曲总时长
+            this.$refs.player.addEventListener("canplay", this.durationHandler)
         },
         playerRemoveListener(){
             this.$refs.player.removeEventListener("timeuodate",this.currentTimeHandler)
@@ -92,6 +94,11 @@ export default {
 </script>
 
 <style scoped>
+.play{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 .header {
     padding: 15px;
 }
@@ -120,16 +127,23 @@ export default {
 
 .song-info {
     padding: 15px;
+    flex:1;
+    display: flex;
+    flex-direction: column;
 }
 
 .song-info-img {
     text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .song-info-img img {
     width: 50%;
     border-radius: 5px;
     box-shadow: 0 0 10px 0 rgba(50, 50, 50, 0.31);
+    margin: 0 auto;
 }
 
 .song-lrc {

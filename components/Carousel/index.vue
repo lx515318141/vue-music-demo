@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// 轮播插件
 export default {
     name:"Carousel",
     data(){

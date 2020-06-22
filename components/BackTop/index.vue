@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// 点击回到顶部插件
 export default {
     name:"BackTop",
     data(){

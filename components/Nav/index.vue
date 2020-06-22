@@ -23,6 +23,7 @@
     </div>
 </template>
 <script>
+// 首页导航
 export default {
     name:"Nav"
 }

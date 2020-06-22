@@ -3,7 +3,10 @@
         <div class="block-padding">
             <div class="title">
                     <h3>{{ title }}</h3>
-                    <a>更多</a>
+                    <router-link :to="{name:'More', params:{type: mType}}">
+                        更多
+                    </router-link>
+                    <!-- <a>更多</a> -->
             </div>
             <div class="list clearfix" v-if="data.length>0">
                 <router-link :to ="{name:'Player',params:{id:item.song_id}}" :class="{'clear-padding': index%3 !== 1}" v-for="(item,index) in data" :key="index" class="item">
@@ -18,7 +21,9 @@
         </div>
     </div>
 </template>
+
 <script>
+// 首页歌单
 export default {
     name:"MusicList",
     props:{
@@ -30,6 +35,10 @@ export default {
         },
         title:{
             type:String,
+            default:""
+        },
+        mType:{
+            type:[String,Number],
             default:""
         }
     },
