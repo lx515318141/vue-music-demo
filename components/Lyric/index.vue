@@ -2,13 +2,16 @@
   <div class="lrcContainer">
     <!-- {{ duration }}-{{ currentTime }} -->
     <!-- <p v-if="currentTime >= allKeys[index] && currentTime < allKeys[index+1] " v-for="(value,key,index) in lyricContent" :key="index">{{ value }}</p> -->
-    <div class="lrc" ref="Lyric" v-if="lyricContent.noLrc">
+    <div class="lrc" ref="Lyric">
+      <p v-if="lyricPrompt">
+        {{ lyricPrompt }}
+      </p>
       <p
         class="lrc-p"
         :class="{'active':currentTime >= allKeys[index] && currentTime < allKeys[index+1]}"
         v-for="(value,key,index) in lyricContent"
-        :key="index"
-      >{{ lyricContent }}{{ scrollLrc(index) }}</p>
+        :key="index" 
+      >{{ value }}{{ scrollLrc(index) }}</p>
     </div>
   </div>
 </template>
@@ -20,7 +23,8 @@ export default {
   data() {
     return {
       lyricContent: {},
-      allKeys: []
+      allKeys: [],
+      lyricPrompt:''
     };
   },
   props: {
@@ -48,40 +52,37 @@ export default {
         if (res.data.lrcContent) {
           this.lyricParse(res.data.lrcContent);
         } else {
-          this.lyricContent["noLrc"] = "暂无歌词";
-          console.log("1");
+          this.lyricPrompt = "暂无歌词";
         }
-        console.log(this.lyricContent);
       });
   },
   methods: {
     //   解析歌词
     lyricParse(data) {
-      var lyricObj = {};
-      var lyrics = data.split("\n");
+        var lyricObj = {};
+        var lyrics = data.split("\n");
 
-      for (let i = 0; i < lyrics.length; i++) {
-        var reg = /\[\d*:\d*((\.|\:)\d*)\]/g;
-        var timeTegExArr = lyrics[i].match(reg);
+        for (let i = 0; i < lyrics.length; i++) {
+          var reg = /\[\d*:\d*((\.|\:)\d*)\]/g;
+          var timeTegExArr = lyrics[i].match(reg);
 
-        // 歌词对应的时间，先判断歌词是否存在这个时间格式，存在才执行
-        if (timeTegExArr) {
-          var t = timeTegExArr[0];
-          var min = Number(String(t.match(/\[\d*/i)).slice(1));
-          var sec = Number(String(t.match(/\:\d*/i)).slice(1));
-          // 更加仔细，连毫秒都取出来，根据需求来选择使用哪种方法
-          // var sec = parseFloat(String(t.match(/\:\d*((\.|\:)\d*)/i)).slice(1));
-          var time = min * 60 + sec;
+          // 歌词对应的时间，先判断歌词是否存在这个时间格式，存在才执行
+          if (timeTegExArr) {
+            var t = timeTegExArr[0];
+            var min = Number(String(t.match(/\[\d*/i)).slice(1));
+            var sec = Number(String(t.match(/\:\d*/i)).slice(1));
+            // 更加仔细，连毫秒都取出来，根据需求来选择使用哪种方法
+            // var sec = parseFloat(String(t.match(/\:\d*((\.|\:)\d*)/i)).slice(1));
+            var time = min * 60 + sec;
+          }
+          // 歌词
+          // 将每行歌词中时间部分用空字符串替换，就得到了纯歌词
+          var content = lyrics[i].replace(timeTegExArr, "");
+          // 再以本句歌词时间作为key，歌词作为value存入对象中
+          lyricObj[time] = content;
         }
-
-        // 歌词
-        // 将每行歌词中时间部分用空字符串替换，就得到了纯歌词
-        var content = lyrics[i].replace(timeTegExArr, "");
-        // 再以本句歌词时间作为key，歌词作为value存入对象中
-        lyricObj[time] = content;
-      }
-      this.lyricContent = lyricObj;
-      this.getAllKeys();
+        this.lyricContent = lyricObj;
+        this.getAllKeys();
     },
     getAllKeys() {
       for (let i in this.lyricContent) {
